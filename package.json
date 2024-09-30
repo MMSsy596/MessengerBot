@@ -1,10 +1,9 @@
 {
-  "name": "test2",
+  "name": "gpt-edge-app",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node gpt.js"
   },
   "keywords": [],
   "author": "",
@@ -13,8 +12,14 @@
     "axios": "^1.7.7",
     "chatgpt": "^5.2.5",
     "cheerio": "^1.0.0",
+    "dotenv": "^16.4.5",
+    "facebook-chat-api": "github:Schmavery/facebook-chat-api",
+    "fb": "^2.0.0",
+    "fs": "^0.0.1-security",
     "openai": "^4.58.1",
     "puppeteer": "^23.3.0",
+    "puppeteer-core": "^23.3.0",
     "selenium-webdriver": "^4.24.0"
-  }
+  },
+  "description": ""
 }

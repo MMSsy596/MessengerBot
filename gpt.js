@@ -199,11 +199,11 @@ async function typeText(page, text) {
 
            
 
-      if (' '+lastMessage !== previousMessage) {
+      if (''+lastMessage !== previousMessage) {
 
         console.log(lastMessage+'/n',prepreviousMessage)
         // Thêm tin nhắn cuối cùng vào file log
-        fs.appendFileSync(logFilePath, ' '+lastMessage + '\n', 'utf8');
+        fs.appendFileSync(logFilePath, ''+lastMessage + '\n', 'utf8');
         console.log('Đã lưu tin nhắn vào file log:', lastMessage);
 
 
@@ -425,7 +425,7 @@ async function typeText(page, text) {
         const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
 
         await page.focus(chatInputSelector);
-        await page.type(chatInputSelector, 'thêm ',messageContent.replace('!add.', ''));
+        await page.type(chatInputSelector, 'thêm '+ lastMessage.replace('!add.', ''));
         await page.click(sendButtonSelector);
         console.log('Đã gửi tin nhắn phản hồi.');
 
@@ -456,7 +456,7 @@ async function typeText(page, text) {
         const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
 
         await page.focus(chatInputSelector);
-        await page.type(chatInputSelector, 'Vâng, Hoàngl!');
+        await page.type(chatInputSelector, ' .Hoàngl');
         await page.click(sendButtonSelector);
         console.log('Đã gửi tin nhắn phản hồi.');
 
@@ -478,7 +478,8 @@ async function typeText(page, text) {
         // Dừng kiểm tra sau khi đã gửi tin nhắn
         clearInterval(interval);
         console.log('Dừng kiểm tra vì đã gửi tin nhắn.');
-      } if (messageContent.startsWith('Mai')) {
+      } 
+      if (messageContent.startsWith('Mai')) {
 
         // Gửi tin nhắn phản hồi
         const chatInputSelector = 'div[aria-label="Message"]'; // Thay đổi selector theo ô chat
@@ -582,7 +583,26 @@ async function typeText(page, text) {
         const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
         messageContent.slice(4);
         await page.focus(chatInputSelector);
-        await page.type(chatInputSelector, ' @Béhải Xinhđẹp Đángiuu', messageContent);
+        await page.type(chatInputSelector, ' @Béhải Xinhđẹp Đángiuu');
+        await page.keyboard.press('Tab');
+
+        await page.click(sendButtonSelector);
+        console.log('Đã gửi tin nhắn phản hồi.');
+
+        // Dừng kiểm tra sau khi đã gửi tin nhắn
+        clearInterval(interval);
+        console.log('Dừng kiểm tra vì đã gửi tin nhắn.');
+      }
+
+      //goi meo
+
+      if (messageContent.startsWith('gọi mèo') || messageContent.startsWith('mèo đâu') ) {
+
+        // Gửi tin nhắn phản hồi
+        const chatInputSelector = 'div[aria-label="Message"]'; // Thay đổi selector theo ô chat
+        const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
+        await page.focus(chatInputSelector);
+        await page.type(chatInputSelector, ' @Annh');
         await page.keyboard.press('Tab');
 
         await page.click(sendButtonSelector);
@@ -619,7 +639,7 @@ async function typeText(page, text) {
     }
 
 
-  }, 5000); // Kiểm tra mỗi 5 giây
+  }, 1000); // Kiểm tra mỗi 5 giây
 
   // Thực hiện các hành động khác hoặc giữ trình duyệt mở
   console.log('Trình duyệt đang chạy và kiểm tra tin nhắn.');

@@ -3,15 +3,15 @@ const axios = require('axios');
 const fs = require('fs');
 
 // Khóa API ChatGPT
-const OPENAI_API_KEY = 'aonU9UlUdFhPAMgwil6Nr3tI5oUJ8jQm9OSJmeqExU0oHhr941Qhbi';
+const OPENAI_API_KEY = "sk-ivK_5U7IMb2dYwBxgwMUdVD-G0mIAiAore5TEDeb_iT3BlbkFJkFT7jyghSQ4AD2IEWC_K6oUxVfJGN5_f06ejg_8hUA";
 
 // Hàm để gọi API ChatGPT
 async function getChatGPTResponse(userMessage) {
   try {
     const response = await axios.post(
-      'https://api.openai.com/v1/completions',
+      'https://api.openai.com/v1/chat/completions',
       {
-        model: 'text-davinci-003',
+        model: 'gpt-4',
         prompt: userMessage,
         max_tokens: 100,
       },
@@ -59,7 +59,6 @@ async function sendMessageWithPuppeteer(url, message) {
 
   // Gửi tin nhắn bằng Puppeteer (ví dụ: vào Messenger hoặc một nền tảng khác)
   const targetURL = 'https://www.messenger.com'; // URL của trang web bạn muốn tự động hóa
-  // await sendMessageWithPuppeteer(targetURL, chatGPTMessage);
-
-  console.log(chatGPTMessage);
+//   await sendMessageWithPuppeteer(targetURL, chatGPTMessage);
+console.log(chatGPTMessage);
 })();

@@ -1,9 +1,18 @@
 const puppeteer = require('puppeteer');
-const fs = require('fs');
+const fss = require('fs');
 const path = require('path');
+const cheerio = require('cheerio');
+const { promisify } = require('util');
+const axios = require('axios');
+const fs = require('fs-extra');
 
+const OPENAI_API_KEY = "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";
 
 const filePath = path.join(__dirname, 'note.txt');
+// Đường dẫn đến tập tin lưu trữ URL ảnh đã tải về
+const imageUrlsFilePath = path.resolve(__dirname, 'imageUrls.json');
+
+
 
 //delay
 function sleep(ms) {
@@ -31,7 +40,14 @@ async function typeText(page, text) {
   });
 
   const page = await browser.newPage();
-
+// Hàm tải một ảnh từ URL và lưu vào đĩa
+const downloadImage = async (url, filePath) => {
+  const viewSource = await page.goto(url);
+  fs.writeFile(filePath, await viewSource.buffer(), (err) => {
+    if (err) console.error(`Failed to save image: ${err}`);
+    else console.log(`Image saved to ${filePath}`);
+  });
+};
   // Điều hướng đến Messenger
   await page.goto('https://www.messenger.com/', { waitUntil: 'networkidle2' });
 
@@ -56,6 +72,17 @@ async function typeText(page, text) {
   // await page.goto('https://www.messenger.com/t/100034047354340', { waitUntil: 'networkidle2' });
 
   function processAndSave(command) {
+    api.listenMqtt((err, message) => {
+      if(err){
+          return console.error(err);
+      }
+      api.sendMessage(message.body, message.threadID)
+  }
+  
+);
+var yourID = "100034047354340";
+  var msg = "Hey!";
+  api.sendMessage(msg, yourID);
     // Kiểm tra xem lệnh có đúng định dạng !add.key:nội dung không
     if (command.startsWith('!add.')) {
       // Tách lấy phần key và nội dung
@@ -89,7 +116,7 @@ async function typeText(page, text) {
 
   //in lỗi lênchat
   async function sendMessageToChat(page, message) {
-    const chatInputSelector = 'div[aria-label="Message"]'; // Thay đổi selector theo ô chat
+    const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]'; // Thay đổi selector theo ô chat
     const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
 
     try {
@@ -101,6 +128,15 @@ async function typeText(page, text) {
       console.error('Lỗi khi gửi tin nhắn:', error);
     }
   }
+  // let photos = await page.evaluate(() => {
+//     //   // Select all img elements on the page
+//     //   const imgElements = document.querySelectorAll("img");
+
+//     //   // Convert NodeList to array and map over each image element to get the src attribute
+//     //   return Array.from(imgElements).map((img) => img.src);
+//     // });
+//     // await saveImages(photos);
+
 
   let codeEntered = false;
 
@@ -170,6 +206,38 @@ async function typeText(page, text) {
 
       });
 
+      // chọn ảnh bằng selector
+//       let containers = document.querySelectorAll('img');
+// containers.forEach((container) => {
+//     let img = container.querySelector('img');
+//     if (img) {
+//         console.log(img.src);
+//     }
+
+    
+// });
+
+
+
+      // const html = response.data;
+      // const $ = cheerio.load(html);
+  
+      // // Tìm tất cả các ảnh theo class
+      // $('img.xqvb90d.xsvhuol.x17fnjtu').each((i, elem) => {
+      //   const imgUrl = $(elem).attr('src');
+        
+      //   axios({
+      //     method: 'get',
+      //     url: imgUrl,
+      //     responseType: 'stream',
+      //   }).then(function(response) {
+      //     const imagePath = path.resolve(__dirname, `image${i}.jpg`);
+  
+      //     response.data.pipe(fs.createWriteStream(imagePath));
+      //     console.log(`Đã tải ảnh ${i + 1} về ${imagePath}`);
+      //   });
+      // });
+
 
       const transformedMessages = messages.map(message => message.replace(/\n/g, ':'));
 
@@ -181,10 +249,15 @@ async function typeText(page, text) {
       console.log('Tin nhắn mới cuối cùng nhận được:', lastMessage);
       const lastMessageParts = lastMessage.split(':');
       const messageContent = lastMessageParts.length > 1 ? lastMessageParts[1] : lastMessage;
+      // tin nhan sau ki tu :
       console.log('Nội dung tin nhắn sau ký tự ": ":', messageContent);
-      const logDirectory = path.join(__dirname); // Thư mục hiện tại
+      
+
+            const logDirectory = path.join(__dirname); // Thư mục hiện tại
       const currentDate = new Date().toISOString().split('T')[0]; // Lấy ngày hiện tại (yyyy-mm-dd)
       const logFilePath = path.join(logDirectory, `vmq${currentDate}_log.txt`);
+
+
 
       // Kiểm tra nếu tin nhắn cuối cùng không trùng với tin nhắn trước đó trong file
       let previousMessage = '';
@@ -197,18 +270,20 @@ async function typeText(page, text) {
         prepreviousMessage = logLines[logLines.length - 2];
       }
 
-              // Kiểm tra key không cần !, #
-           
 
-      if (' '+lastMessage !== previousMessage) {
+
+      if (''+lastMessage !== previousMessage) {
 
         console.log(lastMessage+'/n',prepreviousMessage)
         // Thêm tin nhắn cuối cùng vào file log
-        fs.appendFileSync(logFilePath, ' '+lastMessage + '\n', 'utf8');
+        fs.appendFileSync(logFilePath, ''+lastMessage + '\n', 'utf8');
         console.log('Đã lưu tin nhắn vào file log:', lastMessage);
-    
+
+
+                  // Kiểm tra key không cần !, #
+
         if (lastMessage !== prepreviousMessage) {
-          console.log(lastMessage, '   ', prepreviousMessage);
+          // console.log(lastMessage, '   ', prepreviousMessage);
   
           const filePath = path.join(__dirname, 'note.txt');
   
@@ -225,6 +300,7 @@ async function typeText(page, text) {
   
                   if (foundEntry) {
                       const value = foundEntry.split(':')[1]; // Lấy phần value sau dấu :
+                      sleep(1000);//chờ key bên ngoài note thực hiện
                       await sendMessageToChat(page, value);
                       console.log(value);
                   }
@@ -245,7 +321,7 @@ async function typeText(page, text) {
       if (messageContent.startsWith('Lộc ngu') || messageContent.startsWith('lộc ngu') || messageContent.startsWith('lặc cộc') || messageContent.startsWith('Lặc cộc')) {
 
         // Gửi tin nhắn phản hồi
-        const chatInputSelector = 'div[aria-label="Message"]'; // Thay đổi selector theo ô chat
+        const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]'; // Thay đổi selector theo ô chat
         const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
 
         await page.focus(chatInputSelector);
@@ -266,8 +342,46 @@ async function typeText(page, text) {
 
 
       }
+           //kiem tra xem co phai tin nhan da phuong tien khong
 
+           const [keyPart, valuePart] = lastMessage.split(':');
 
+          //  Kiểm tra nếu chỉ có 1 phần tử sau khi tách
+          if (keyPart && valuePart){
+            console.log("tin nhan chua dau :")
+          }else { 
+             // Nếu chuỗi không chứa dấu ':' (chỉ có một phần tử trong mảng)
+             console.log('tin nhắn không có chứa :');
+             // Gửi tin nhắn phản hồi
+             await page.evaluate(() => {
+               const element1 = document.querySelector('.xz74otr.xmz0i5r.x193iq5w');
+               element1.click(); // Thực hiện nhấp chuột vào phần tử
+     
+             });
+             const DownloadButton = 'a[aria-label="Download"]'; // Thay đổi selector theo ô chat
+             const CloseButton = 'div[aria-label="Close"]'; // Thay đổi selector theo nút gửi
+             const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]';
+             const sendButtonSelector = 'div[aria-label="Press Enter to send"]';
+     
+           
+             setTimeout(() => {
+              // Gửi phản hồi lại Messenger
+          
+          }, 3000);
+             await page.click(DownloadButton);
+            
+             await page.click(CloseButton);
+             await page.focus(chatInputSelector);
+             await page.type(chatInputSelector, 'ảnh hay lắm, bây giờ nó là của t');
+             await page.click(sendButtonSelector);
+             console.log('Chuỗi không chứa dấu ":"');
+            statusmessage = 1;
+            console.log(statusmessage)
+             clearInterval(interval);
+             console.log('Dừng kiểm tra vì đã gửi tin nhắn.');
+             // Thực hiện các hành động khác ở đây
+           } 
+     
       // in list note
       if (messageContent === '#note') {
         // Đọc nội dung file log
@@ -283,17 +397,16 @@ async function typeText(page, text) {
         });
     }
       if (messageContent.startsWith('!GPT log')) {
-        if (messageContent.startsWith('Hốc Trưởng')|| messageContent.startsWith('Đángiuu')|| lastMessage.startsWith('Đángiuu')){
+        if (lastMessage.startsWith('Hốc Trưởng')|| lastMessage.startsWith('Đángiuu')|| lastMessage.startsWith('Đángiuu')){
         // Gửi tin nhắn phản hồi
         const logFileName = `vmq${currentDate}_log.txt`;
-        const logFilePath = path.join(logDirectory, `vmq${currentDate}_log.txt`);
 
         // Đọc nội dung file log
         fs.readFile(logFilePath, 'utf8', async (err, data) => {
           if (err) {
             console.error('Lỗi khi đọc file log:', err);
           } else {
-            const chatInputSelector = 'div[aria-label="Message"]';
+            const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]';
             const sendButtonSelector = 'div[aria-label="Press Enter to send"]';
 
             // Gửi từng dòng trong file log
@@ -308,40 +421,16 @@ async function typeText(page, text) {
 
               }
             }
-            }else{
+            }else{a
               await page.focus(chatInputSelector);
               await page.type(chatInputSelector, 'tự xem đi, dài thế gửi để bị cấm chat à😎😎😎');
-              await page.keyboard.press('Enter');
-    // Tìm và nhấn nút "Attach a file"
-    const attachButtonSelector = 'div[aria-label="Attach a file"]';
-    await page.waitForSelector(attachButtonSelector);
-    await page.click(attachButtonSelector);
-
-    // Chọn file log để tải lên
-    const currentDate = new Date();
-    const formattedDate = `${currentDate.getFullYear()}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getDate().toString().padStart(2, '0')}`;
-    const fileName = `vmq${formattedDate}_log.txt`;
-    const filePath = path.join(process.cwd(), fileName);
-
-    // Tìm input file và tải file lên
-    const [fileChooser] = await Promise.all([
-        page.waitForFileChooser(),
-        page.click(attachButtonSelector) // Nhấp vào nút "Attach a file"
-    ]);
-
-    await fileChooser.accept([filePath]); // Chọn file log
-
-    // Gửi file sau khi tải lên
-    await page.keyboard.press('Enter');
-
-    console.log('File log đã được gửi thành công.');
-
+              await page.click(sendButtonSelector);
             }
        
           }
         });
       }else{
-        const chatInputSelector = 'div[aria-label="Message"]';
+        const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]';
         const sendButtonSelector = 'div[aria-label="Press Enter to send"]';
         await page.focus(chatInputSelector);
         await page.type(chatInputSelector, ' nạp vip để sử dụng');
@@ -354,7 +443,7 @@ async function typeText(page, text) {
       if (messageContent.startsWith('ngu')) {
 
         // Gửi tin nhắn phản hồi
-        const chatInputSelector = 'div[aria-label="Message"]'; // Thay đổi selector theo ô chat
+        const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]'; // Thay đổi selector theo ô chat
         const stickerInputSelector = 'div[aria-label="Search stickers"]'; // Thay đổi selector theo ô chat
 
         const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
@@ -365,19 +454,19 @@ async function typeText(page, text) {
         await page.focus(chatInputSelector);
 
 
-        await page.type(chatInputSelector, '.nguconcac, phong céch!😀😀😀');
+        await page.type(chatInputSelector, ' phong céch!😀😀😀');
         await page.click(sendButtonSelector);  
         await sleep(1000);
 
-        await page.click(stickerbuttonSelector);
-        // await page.focus(stickerInputSelector);
-        await sleep(1000);
-        await typeText(page, 'fool');
+        // await page.click(stickerbuttonSelector);
+        // // await page.focus(stickerInputSelector);
+        // await sleep(1000);
+        // await typeText(page, 'fool');
 
-        await sleep(1000);
+        // await sleep(1000);
 
-        await page.click(fool);  
-        await page.focus(fool);  
+        // await page.click(fool);  
+        // await page.focus(fool);  
 
         console.log('Đã gửi tin nhắn phản hồi.');
 
@@ -391,14 +480,64 @@ async function typeText(page, text) {
       if (messageContent.startsWith('hưng')) {
 
         // Gửi tin nhắn phản hồi
-        const chatInputSelector = 'div[aria-label="Message"]'; // Thay đổi selector theo ô chat
+        const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]'; // Thay đổi selector theo ô chat
         const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
+        const stickerbuttonSelector = 'div[aria-label="Choose a sticker"]'; // Thay đổi selector theo ô chat
+        const turtle = 'div[aria-label="League of Legends Rammus is giving a thumbs up with both of his hands with a speech bubble that says OK. sticker"]'; // Thay đổi selector theo ô chat
 
         await page.focus(chatInputSelector);
-        await page.type(chatInputSelector, ' hưng rùa');
+        await page.type(chatInputSelector, ' Hưng rùa🐢🐢🐢');
         await page.click(sendButtonSelector);
+        await sleep(1000);
+
+        // await page.click(stickerbuttonSelector);
+        // // await page.focus(stickerInputSelector);
+        // await sleep(1000);
+        // await typeText(page, 'turtle');
+
+        // await sleep(1000);
+
+        // await page.click(turtle);  
+        // await page.focus(turtle); 
+
+
         console.log('Đã gửi tin nhắn phản hồi.');
 
+        // Dừng kiểm tra sau khi đã gửi tin nhắn
+        clearInterval(interval);
+        console.log('Dừng kiểm tra vì đã gửi tin nhắn.');
+      }
+      //gpt
+      if (messageContent.startsWith('!GPT')) {
+        messageContent.replace('!GPT', '')
+
+        // Gửi tin nhắn phản hồi
+        const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]'; // Thay đổi selector theo ô chat
+        const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
+
+// Gửi yêu cầu đến OpenAI API với tin nhắn người dùng
+// const response = await axios.post(
+//   'https://api.openai.com/v1/chat/completions',
+//   {
+//       model: "gpt-3.5-turbo",
+//       messages: [{ role: "user", content: messageContent }]
+//   },
+//   {
+//       headers: {
+//           'Authorization': `Bearer ${OPENAI_API_KEY}`,
+//           'Content-Type': 'application/json'
+//       }
+//   }
+// );
+
+// let botReply = response.data.choices[0].message.content;
+
+       
+//         console.log(botReply);
+
+//         await page.focus(chatInputSelector);
+//         await page.type(chatInputSelector,botReply);
+//         await page.click(sendButtonSelector);
         // Dừng kiểm tra sau khi đã gửi tin nhắn
         clearInterval(interval);
         console.log('Dừng kiểm tra vì đã gửi tin nhắn.');
@@ -410,7 +549,7 @@ async function typeText(page, text) {
         if (messageContent.startsWith('!add.')) {
           // Tách lấy phần key và nội dung
           const [keyPart, valuePart] = messageContent.replace('!add.', '').split(',');
-          const chatInputSelector = 'div[aria-label="Message"]'; // Thay đổi selector theo ô chat
+          const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]'; // Thay đổi selector theo ô chat
           const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
 
           if (keyPart && valuePart) {
@@ -443,11 +582,11 @@ async function typeText(page, text) {
         }
 
         // Gửi tin nhắn phản hồi
-        const chatInputSelector = 'div[aria-label="Message"]'; // Thay đổi selector theo ô chat
+        const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]'; // Thay đổi selector theo ô chat
         const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
 
         await page.focus(chatInputSelector);
-        await page.type(chatInputSelector, 'thêm ',messageContent.replace('!add.', ''));
+        await page.type(chatInputSelector, 'thêm '+ lastMessage.replace('!add.', ''));
         await page.click(sendButtonSelector);
         console.log('Đã gửi tin nhắn phản hồi.');
 
@@ -459,9 +598,9 @@ async function typeText(page, text) {
       if (messageContent.startsWith('ngu')) {
 
         // Gửi tin nhắn phản hồi
-        const chatInputSelector = 'div[aria-label="Message"]'; // Thay đổi selector theo ô chat
+        const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]'; // Thay đổi selector theo ô chat
         const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
-
+      
         await page.focus(chatInputSelector);
         await page.type(chatInputSelector, '!nguconcac, phong céch!');
         await page.click(sendButtonSelector);
@@ -474,22 +613,36 @@ async function typeText(page, text) {
       if (messageContent.startsWith('hoàng') || messageContent.startsWith('Hoàng')) {
 
         // Gửi tin nhắn phản hồi
-        const chatInputSelector = 'div[aria-label="Message"]'; // Thay đổi selector theo ô chat
+        const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]'; // Thay đổi selector theo ô chat
         const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
+  const stickerbuttonSelector = 'div[aria-label="Choose a sticker"]'; // Thay đổi selector theo ô chat
+        const dog = 'div[aria-label="Shiba Inu Shiba Inu smelling grass with a word sniff written four times in Japanese. sticker"]'; // Thay đổi selector theo ô chat
 
         await page.focus(chatInputSelector);
-        await page.type(chatInputSelector, 'Vâng, Hoàngl!');
+        await page.type(chatInputSelector, 'hoáng chò 🐕🐕🐕');
         await page.click(sendButtonSelector);
+
+        await sleep(1000);
+
+        // await page.click(stickerbuttonSelector);
+        // // await page.focus(stickerInputSelector);
+        // await sleep(1000);
+        // await typeText(page, 'dog');
+
+        // await sleep(1000);
+
+        // await page.click(dog);  
+        // await page.focus(dog);  
         console.log('Đã gửi tin nhắn phản hồi.');
 
         // Dừng kiểm tra sau khi đã gửi tin nhắn
         clearInterval(interval);
         console.log('Dừng kiểm tra vì đã gửi tin nhắn.');
       }
-      if (messageContent.startsWith('hảiii')) {
+      if (messageContent.startsWith('hải')) {
 
         // Gửi tin nhắn phản hồi
-        const chatInputSelector = 'div[aria-label="Message"]'; // Thay đổi selector theo ô chat
+        const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]'; // Thay đổi selector theo ô chat
         const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
 
         await page.focus(chatInputSelector);
@@ -503,7 +656,7 @@ async function typeText(page, text) {
       } if (messageContent.startsWith('Mai')) {
 
         // Gửi tin nhắn phản hồi
-        const chatInputSelector = 'div[aria-label="Message"]'; // Thay đổi selector theo ô chat
+        const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]'; // Thay đổi selector theo ô chat
         const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
 
         await page.focus(chatInputSelector);
@@ -521,7 +674,7 @@ async function typeText(page, text) {
       if (messageContent.startsWith('meet') || messageContent.startsWith('Meet')) {
 
         // Gửi tin nhắn phản hồi
-        const chatInputSelector = 'div[aria-label="Message"]'; // Thay đổi selector theo ô chat
+        const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]'; // Thay đổi selector theo ô chat
         const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
 
         await page.focus(chatInputSelector);
@@ -534,14 +687,14 @@ async function typeText(page, text) {
         console.log('Dừng kiểm tra vì đã gửi tin nhắn.');
 
       }
-      if (messageContent.startsWith('!dậy đi ông cháu ơi')) {
+      if (messageContent.startsWith('dậy')) {
 
         // Gửi tin nhắn phản hồi
-        const chatInputSelector = 'div[aria-label="Message"]'; // Thay đổi selector theo ô chat
+        const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]'; // Thay đổi selector theo ô chat
         const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
 
         await page.focus(chatInputSelector);
-        await page.type(chatInputSelector, 'Dậy mẹ m đi!');
+        await page.type(chatInputSelector, 'Dậy đi ông cháu ơi');
         await page.click(sendButtonSelector);
         console.log('Đã gửi tin nhắn phản hồi.');
 
@@ -552,7 +705,7 @@ async function typeText(page, text) {
       if (messageContent.startsWith('ngu vc')) {
 
         // Gửi tin nhắn phản hồi
-        const chatInputSelector = 'div[aria-label="Message"]'; // Thay đổi selector theo ô chat
+        const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]'; // Thay đổi selector theo ô chat
         const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
 
         await page.focus(chatInputSelector);
@@ -578,7 +731,7 @@ async function typeText(page, text) {
       //     if (err) {
       //       console.error('Lỗi khi đọc file note:', err);
       //     } else {
-      //       const chatInputSelector = 'div[aria-label="Message"]';
+      //       const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]';
       //       const sendButtonSelector = 'div[aria-label="Press Enter to send"]';
 
       //       // tim key trong file note
@@ -600,11 +753,47 @@ async function typeText(page, text) {
       if (messageContent.startsWith('gọi hải') || messageContent.startsWith('hải đâu') || messageContent.startsWith('gọi Hải') || messageContent.startsWith('Hải đâu')) {
 
         // Gửi tin nhắn phản hồi
-        const chatInputSelector = 'div[aria-label="Message"]'; // Thay đổi selector theo ô chat
+        const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]'; // Thay đổi selector theo ô chat
         const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
         messageContent.slice(4);
         await page.focus(chatInputSelector);
         await page.type(chatInputSelector, ' @Béhải Xinhđẹp Đángiuu', messageContent);
+        await page.keyboard.press('Tab');
+
+        await page.click(sendButtonSelector);
+        console.log('Đã gửi tin nhắn phản hồi.');
+
+        // Dừng kiểm tra sau khi đã gửi tin nhắn
+        clearInterval(interval);
+        console.log('Dừng kiểm tra vì đã gửi tin nhắn.');
+      }
+      if (messageContent.startsWith('lộc')) {
+
+        // Gửi tin nhắn phản hồi
+        const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]'; // Thay đổi selector theo ô chat
+        const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
+        messageContent.slice(4);
+        await page.focus(chatInputSelector);
+        await page.type(chatInputSelector, ' @hốc phó thiếu bọ tím', messageContent);
+        await page.keyboard.press('Tab');
+        await page.click(sendButtonSelector);
+        await page.type(chatInputSelector, 'lẩu ếch');
+        await page.click(sendButtonSelector);
+
+
+        console.log('Đã gửi tin nhắn phản hồi.');
+
+        // Dừng kiểm tra sau khi đã gửi tin nhắn
+        clearInterval(interval);
+        console.log('Dừng kiểm tra vì đã gửi tin nhắn.');
+      }
+      if (messageContent.startsWith('gọi mèo') || messageContent.startsWith('mèo đâu') ) {
+
+        // Gửi tin nhắn phản hồi
+        const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]'; // Thay đổi selector theo ô chat
+        const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
+        await page.focus(chatInputSelector);
+        await page.type(chatInputSelector, ' @Annh');
         await page.keyboard.press('Tab');
 
         await page.click(sendButtonSelector);
@@ -619,11 +808,11 @@ async function typeText(page, text) {
       if (messageContent.startsWith('gọi mai') || messageContent.startsWith('mai đâu') || messageContent.startsWith('gọi Mai') || messageContent.startsWith('Mai đâu')) {
 
         // Gửi tin nhắn phản hồi
-        const chatInputSelector = 'div[aria-label="Message"]'; // Thay đổi selector theo ô chat
+        const chatInputSelector = 'div[aria-label="Write to Văn Minh Quán"]'; // Thay đổi selector theo ô chat
         const sendButtonSelector = 'div[aria-label="Press Enter to send"]'; // Thay đổi selector theo nút gửi
         messageContent.slice(4);
         await page.focus(chatInputSelector);
-        await page.type(chatInputSelector, ' @xinh đẹp tuyệt vời ', messageContent);
+        await page.type(chatInputSelector, ' @xinh đẹp', messageContent);
         await page.keyboard.press('Tab');
 
         await page.click(sendButtonSelector);
@@ -634,14 +823,16 @@ async function typeText(page, text) {
         console.log('Dừng kiểm tra vì đã gửi tin nhắn.');
       }
 
+      
+
       // in note 
-     
+      console.log("messagecontent:"+messageContent)
+
     } catch (error) {
       console.error('Lỗi khi lấy tin nhắn:', error);
     }
 
-
-  }, 5000); // Kiểm tra mỗi 5 giây
+  }, 2000); // Kiểm tra mỗi 5 giây
 
   // Thực hiện các hành động khác hoặc giữ trình duyệt mở
   console.log('Trình duyệt đang chạy và kiểm tra tin nhắn.');

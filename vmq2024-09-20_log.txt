@@ -1,0 +1,162 @@
+ Đángiuu:1
+ Đángiuu1
+ Đángiuu:1
+ You sent:!GPT hello
+ You sent:!GPT hello:Sent
+ You sent:!GPT hello:Sent 1m ago
+ You sent:!GPT hello
+ You sent!GPT hello
+ You sent:!GPT hello
+ You sent:ảnh hay lắm, bây giờ
+ You sent:ảnh hay lắm, bây giờ:Sent
+ You sent:ảnh hay lắm, bây giờ nó là của tảnh hay lắm, b
+ You sent:ảnh hay lắm, bây giờ nó là của tảnh hay lắm, b:Sent
+ You sentảnh hay lắm, bây giờ nó là của tảnh hay lắm, bSent
+ You sent:ảnh hay lắm, bây giờ nó là của tảnh hay lắm, b:Sent
+ You sent:ảnh hay lắm, bây giờ nó là của tảnh hay lắm, b:Sent 1m ago
+ You sent:ảnh hay lắm, bây giờ nó là của tảnh hay lắm, b
+ Đángiuu
+ You sent:ây giờây giờ nó
+ You sentây giờây giờ nóSent
+ You sent: lờ nó là củaảnh hay lắm, bây giờ nó là của t
+ You sentlờ nó là củaảnh hay lắm, bây giờ nó là của tSent
+ You sent:lờ nó là củaảnh hay lắm, bây giờ nó là của t:Sent
+ You sent:ảnh hay lắm, bây giờ nó là của ảnh hayủa tảnh ha
+ You sent:ảnh hay lắm, bây giờ nó là của ảnh hayủa tảnh ha:Sent
+ You sent:y lắm, bâyảnh hay lắm, bây giờ nó là của t
+ You sent:y lắm, bâyảnh hay lắm, bây giờ nó là của t:Sent
+ You sent:ảnh hay lắm, bây giờ nó là
+ You sent:ảnh hay lắm, bây giờ nó là:Sent
+ 
+ You sentảnh hay lắm, bây giờ nó làSent
+ You sent:ảnh hay lắm, bây giờ nó là:Sent
+ You sent:ảnh hay lắm, bây
+ You sentảnh hay lắm, bây
+ You sent:ảnh hay lắm, bây
+ You sent:ảnh hay lắm, bây giờ nó là của t
+ You sentảnh hay lắm, bây giờ nó là của t
+ You sent:ảnh hay lắm, bây giờ nó là của t:Sending
+ You sentây giờ nó lây giờ nó là c
+ You sent:ảnh hay lắm, bây giờ nó là của t
+ You sentảnh hay lắm, bây giờ nó là của t
+ You sent:ảnh hay lắm, bây giờ nó ảnh hay lắm, bây giờ nó là của t
+ You sent:ảnh hay lắm, bây giờ nó ảnh hay lắm, bây giờ nó là của t:Sent
+ 
+ You sentảnh hay lắm, bây giờ nó ảnh hay lắm, bây giờ nó là của tSent
+ You sent:ảnh hay lắm, bây giờ nó ảnh hay lắm, bây giờ nó là của t:Sent
+ You sent:ảnh hay lắm, bây giờ nó lảnh hay lắm, bây giờ nó là của t:Sent
+ You sent:ảnh hay lắm,
+ You sent:ảnh hay lắm,:Sent
+ You sent:ảnó là của tó là của tảnh hay 
+ You sentảnó là của tó là của tảnh haySent
+ You sent:lắm, bây giờ nó lảnh hay lắm, bây giờ nó là của t
+ You sent:lắm, bây giờ nó lảnh hay lắm, bây giờ nó là của t:Sent
+ You sent:lắm, bây giờ nó lảnh hay lắm, bây giờ nó là của t:Sent 1m ago
+ You sentlắm, bây giờ nó lảnh hay lắm, bây giờ nó là của tSent 1m ago
+ You sent:lắm, bây giờ nó lảnh hay lắm, bây giờ nó là của t:Sent 2m ago
+ You sent:ảnh hay lắm, bây giờ nó là của t:Sent
+ You sentảnh hay lắm, bây giờ nó là của tSent
+ You sent:ảnh hay lắm, bây giờ nó là của t:Sent
+ You sent:ảnh hay lắm, bây giờ nó là của t:Sent 1m ago
+ You sent:ảnh hay lắm, bây giờ nó là của t:Sent 2m ago
+ You sent:ảnh hay lắm, bây giờ nó là của t:Sent 3m ago
+ You sent:ảnh hay lắm, bây giờ nó là của t
+ Đángiuu
+ You sent:ảnh hay lắm, bây giờ nó là của t
+ Đángiuu
+ You sent:ây giờ nó là củảan ht hay lắm, b
+ You sent:ây giờ nó là của t
+ Edit:Unsend:Forward:Pin
+ You sent:ây giờ nó là của t
+ Edit:Unsend:Forward:Pin
+ You sent:ây giờ nó là của t
+ Edit:Unsend:Forward:Pin
+ You sent:ây giờ nó là của t
+ Đángiuu
+ You sent:ảnh hay lắm, bâ
+ You sent:ảnh hay lắm, bây giờ nó là của t
+ You sent:ảnh hay lắm, bây giờ nó là của t:Sent
+ You sent:ảnh hay lắm, bây giờ nó là của t:Sent 1m ago
+ You sent:ảnh hay lắm, bây giờ nó là của t:Sent 2m ago
+ You sent:ảnh hay lắm, bây giờ nó là của t:Sent 3m ago
+ Edit:Unsend:Forward:Pin
+ You sent:ảnh hay lắm, bây giờ nó là của t:Sent 3m ago
+ Edit:Unsend:Forward:Pin
+ You sent:ảnh hay lắm, bây giờ nó là của t:Sent 3m ago
+ You sent:ảnh hay lắm, bâ:Sent 3m ago
+ Edit:Unsend:Forward:Pin
+ You sent:ảnh hay lắm, bâ:Sent 3m ago
+ Đángiuu
+ You sent:ảnh hay lắ
+ You sent:ảnh hay lắm, bây giờ nó là của t
+ You sent:ảnh hay lắm, bây giờ nó là của t:Sent
+ Edit:Unsend:Forward:Pin
+ You sent:ảnh hay lắ
+ Đángiuu
+ You sent:ảnh hay lắm, bây giờ nó là của t:Sent
+ You sent:ảnh hay lắm, bây giờ nó là của t
+ Đángiuu
+ You sent:ảnh hay lắm, bây giờ nó là của t
+ You sentảnh hay lắm, bây giờ nó là của t
+ You sent:ảnh hay lắm, bây giờ nó là của t
+ You sent:ảnh hay lắm, bây giờ nó là của t:Sent
+ You sentảnh hay lắm, bây giờ nó là của tSent
+ You sentảnh hay lắm, bây giờ nó là của t
+ You sent:ảnh hay lắm, bây giờ nó là của t
+ You sent
+ You sent:Sent
+ You sent:ảnh hay lắm, bây giờ nó là của t:Sent
+ You sent:ảnh hay lắm, bây giờ nó là của t
+ Culi:Spam
+ The Liêm:Ashe sp
+ bét kin đẹt replied to The Liêm:Original message::@Quang Vinh Nghiêm @Annh Phạm:Muốn đi quá
+ bét kin đẹt:Cho đi vs
+ The Liêm:Đi đi
+ The Liêm:Chị quý m lắm á
+ bét kin đẹt:Thật may mắn khi đc dự lễ người dễ thương tốt tính ,đang yêu như thế
+ Culi:Ghen tỵ vl
+ Culi:Sướng nhất 2 ae m
+ The Liêm:Dạ
+ Hoàng sĩ:@mọi người game j ko
+ Hốc Trưởng rất thiếu sắt:tài xỉu
+ Hốc Trưởng rất thiếu sắt:tc
+ Hốc Trưởng rất thiếu sắt
+ You sent:ảnh hay lắm, bây giờ nó là của t:Sent
+ You sent:ảnh hay lắm, bây giờ nó là của t
+ Hốc Trưởng rất thiếu sắt:ngon
+ Hốc Trưởng rất thiếu sắt
+ Hốc Trưởng rất thiếu sắt:hqua
+ Hốc Trưởng rất thiếu sắt:t chọc bida rách cả tay
+ Hoàng sĩ replied to Hốc Trưởng rất thiếu sắt:Original message::t chọc bida rách cả tay:Chọc vs lanh hả
+ The Liêm:@mọi người game ko
+ Hốc Trưởng rất thiếu sắt:gọi nhưng mà hắn bảo đang làm không chạu qua được
+ The Liêm:Hải lm t3 trc đi
+ The Liêm:@Phạm Đức Hải
+ Hốc Trưởng rất thiếu sắt:vào
+ The Liêm:Chứ ko như bạn ấy
+ The Liêm:Delay đâu
+ Hốc Trưởng rất thiếu sắt:chưa thấy thg nào
+ Hoàng sĩ:Lỗi ấy
+ Hốc Trưởng rất thiếu sắt:t phải đổi tên
+ Hốc Trưởng rất thiếu sắt:gánh 4 mí thg ngoo
+ The Liêm:Cái j mà 4
+ The Liêm:Đánh 5 lần camp
+ The Liêm:Chết 1
+ The Liêm:Gánh lòi mẹ cục trĩ
+ The Liêm
+ You sent:ảnh hay lắm, bây giờ nó là của t
+ The Liêm:5% mà nó ẳng
+ Hốc Trưởng rất thiếu sắt:thế 3 thg
+ Hoàng sĩ:2 mà
+ Hốc Trưởng rất thiếu sắt:à
+ Hốc Trưởng rất thiếu sắt:không muốn làm 3 à
+ Hốc Trưởng rất thiếu sắt:ừ thì 2
+ Hốc Trưởng rất thiếu sắt:phan anh rách
+ Hoàng sĩ:Cay nhể
+ bét kin đẹt replied to The Liêm:Rừng này make play này
+ bét kin đẹt:Ko cần dame
+ bét kin đẹt:Có hiệu quả là đc
+ The Liêm:Nghỉ hoii
+ Hoàng sĩ:Phong space
+ The Liêm:Wind space
+ Hốc Trưởng rất thiếu sắt:đỡ thế nào được
