@@ -1,21 +1,24 @@
-const { Builder, By, Key, until } = require('selenium-webdriver');
+const puppeteer = require('puppeteer-core');
 
-(async function example() {
-    // Khởi tạo trình duyệt Edge
-    let driver = await new Builder().forBrowser('MicrosoftEdge').build();
-    try {
-        // Mở trang web
-        await driver.get('https://www.google.com');
+(async () => {
+    const browser = await puppeteer.launch({
+        executablePath: '/usr/bin/microsoft-edge', // Đường dẫn đúng tới Edge trên Linux
+        headless: true, // hoặc false nếu bạn muốn hiển thị trình duyệt
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
 
-        // Tìm kiếm một từ khóa
-        let searchBox = await driver.findElement(By.name('q'));
-        await searchBox.sendKeys('Hello World', Key.RETURN);
+    const page = await browser.newPage();
+    await page.goto('https://www.google.com');
 
-        // Chờ kết quả tải
-        await driver.wait(until.titleContains('Hello World'), 10000);
-        console.log('Title is:', await driver.getTitle());
-    } finally {
-        // Đóng trình duyệt
-        await driver.quit();
-    }
+    // Tìm kiếm một từ khóa
+    const searchBox = await page.$('input[name="q"]');
+    await searchBox.type('Hello World');
+    await searchBox.press('Enter');
+
+    // Chờ kết quả tải
+    await page.waitForNavigation();
+
+    console.log('Title is:', await page.title());
+
+    await browser.close();
 })();
