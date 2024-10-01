@@ -1,23 +1,21 @@
-const puppeteer = require("puppeteer");
-const fs = require("fs/promises");
+const { Builder, By, Key, until } = require('selenium-webdriver');
 
-async function start() {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.goto("https://learnwebcode.github.io/practice-requests/");
-  // await page.screenshot({
-  //   path: "dantri.png",
-  // });
-  const photos = await page.$$eval("img", (imgs) => {
-    return imgs.map((x) => x.src);
-  });
+(async function example() {
+    // Khởi tạo trình duyệt Edge
+    let driver = await new Builder().forBrowser('MicrosoftEdge').build();
+    try {
+        // Mở trang web
+        await driver.get('https://www.google.com');
 
-  for (const photo of photos) {
-    const imagepage = await page.goto(photo);
-    await fs.writeFile(photo.split("/").pop(), await imagepage.buffer());
-  }
+        // Tìm kiếm một từ khóa
+        let searchBox = await driver.findElement(By.name('q'));
+        await searchBox.sendKeys('Hello World', Key.RETURN);
 
-  await browser.close();
-}
-
-start();
+        // Chờ kết quả tải
+        await driver.wait(until.titleContains('Hello World'), 10000);
+        console.log('Title is:', await driver.getTitle());
+    } finally {
+        // Đóng trình duyệt
+        await driver.quit();
+    }
+})();
