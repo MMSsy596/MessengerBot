@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer-core');
 (async () => {
     const browser = await puppeteer.launch({
         executablePath: '/usr/bin/microsoft-edge', // Đường dẫn đúng tới Edge trên Linux
-        headless: false, // hoặc false nếu bạn muốn hiển thị trình duyệt
+        headless: true, // hoặc false nếu bạn muốn hiển thị trình duyệt
         args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
 
